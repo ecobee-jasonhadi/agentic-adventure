@@ -10,9 +10,7 @@ class RulesKnowledgeBase:
     def __init__(self):
         # Use the shared KB at the chapter root level
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        # Go up to chapter root: rules_agent -> agents -> 5_a2a_integration
-        chapter_root = os.path.dirname(os.path.dirname(current_dir))
-        self.db_path = os.path.join(chapter_root, "utils", "dnd_knowledge_base")
+        self.db_path = os.path.join(current_dir, "dnd_knowledge_base")
         self._client = None
         self._collection = None
         print(f"KB path: {self.db_path}")

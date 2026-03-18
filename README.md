@@ -2,7 +2,7 @@
 
 ![agentic_adventure](images/banner.jpg)
 
-<h2> Agentic Adventuring</h2>
+<h2>⚔️ Agentic Adventuring ⚔️</h2>
 </div>
 
 For those who know tabletop roleplaying games like Dungeons and Dragons, folks know the Game Master (GM) is a multi-faceted role, being able to weave a world, manage NPCs, and know the rules. How does this relate to AI? In a world where agents must coordinate information, and respond to dynamic requests, let's go on an agentic adventure and explore how we can build multi-agentic workflows for Dungeons and Dragons! Leave this workshop gaining familiarity with building agents and MCP servers, and using A2A. This is a hands-on development workshop and will primarily use Python. This is a Beginner level workshop. No experience with agents is required.

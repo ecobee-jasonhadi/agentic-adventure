@@ -24,6 +24,13 @@ $ uv sync
 $ source .venv/bin/activate
 ```
 
+After sourcing the virtual environment, you should be able to run:
+```
+$ python -c "import strands; import fastapi; import chromadb; print('All good!')"
+
+All good!
+```
+
 The API key used to authenticate for this workshop will be provided during the workshop.
 
 # Workshop Agenda

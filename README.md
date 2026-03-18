@@ -24,6 +24,8 @@ $ uv sync
 $ source .venv/bin/activate
 ```
 
+The API key used to authenticate for this workshop will be provided during the workshop.
+
 # Workshop Agenda
 
 In this workshop, we'll be covering a few points:
@@ -37,3 +39,8 @@ In this workshop, we'll be covering a few points:
 
 This workshop will be a live coding workshop. I'll be typing out code live and pushing to a branch continously. If you get stuck or fall behind, pull the branch and you'll be caught up!
 After each section, we'll take a few minutes for everyone to catch up and answer any questions or have some discussion.
+
+# References
+
+* [Original workshop inspiration](https://github.com/aws-samples/sample-once-upon-agentic-ai) 
+* [Strands SDK Documentation](https://strandsagents.com/)

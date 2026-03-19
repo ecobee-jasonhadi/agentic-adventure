@@ -1,7 +1,10 @@
-from strands import Agent
+from strands import Agent, tool
 from strands.models.gemini import GeminiModel
 import os
 from dotenv import load_dotenv
+import random
+from strands.tools.mcp.mcp_client import MCPClient
+from mcp.client.streamable_http import streamable_http_client
 
 load_dotenv()
 
@@ -10,7 +13,9 @@ gemini = GeminiModel(
     model_id="gemini-2.5-flash",
 )
 
-agent = Agent(model=gemini)
+dice_mcp = MCPClient(lambda: streamable_http_client("http://0.0.0.0:8080/mcp"))
+
+agent = Agent(model=gemini, tools=[dice_mcp])
 
 print("Agentic Adventure - Type 'quit' to exit")
 while True:

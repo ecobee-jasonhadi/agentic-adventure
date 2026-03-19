@@ -12,3 +12,5 @@ wheels/
 # Agent Outputs
 repl_state
 dnd_knowledge_base
+
+.env

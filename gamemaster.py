@@ -3,6 +3,8 @@ from strands.models.gemini import GeminiModel
 import os
 from dotenv import load_dotenv
 import random
+from strands.tools.mcp.mcp_client import MCPClient
+from mcp.client.streamable_http import streamable_http_client
 
 load_dotenv()
 
@@ -11,36 +13,9 @@ gemini = GeminiModel(
     model_id="gemini-2.5-flash",
 )
 
+dice_mcp = MCPClient(lambda: streamable_http_client("http://0.0.0.0:8081/mcp"))
 
-@tool
-def roll_dice(num_dice: str, num_faces: str) -> str:
-    """
-    Rolls a specified number of dice with a specified number of faces.
-
-    Args:
-        num_dice: The number of dice to roll as a string.
-        num_faces: The number of faces per die as a string.
-
-    Returns:
-        A string describing the results of the rolls or an error message.
-    """
-    try:
-        n = int(num_dice)
-        f = int(num_faces)
-
-        if n <= 0 or f <= 0:
-            return "Error: Number of dice and faces must be positive integers."
-
-        rolls = [random.randint(1, f) for _ in range(n)]
-        print(
-            f"Rolled {n} dice with {f} faces: {', '.join(map(str, rolls))} (Total: {sum(rolls)})"
-        )
-        return f"Rolled {n} dice with {f} faces: {', '.join(map(str, rolls))} (Total: {sum(rolls)})"
-    except ValueError:
-        return "Error: Invalid input. Both number of dice and faces must be integers."
-
-
-agent = Agent(model=gemini, tools=[roll_dice])
+agent = Agent(model=gemini, tools=[dice_mcp])
 
 print("Agentic Adventure - Type 'quit' to exit")
 while True:

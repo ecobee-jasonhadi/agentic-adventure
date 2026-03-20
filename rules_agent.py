@@ -2,7 +2,16 @@ import os
 import chromadb
 from strands import Agent, tool
 from strands.multiagent.a2a import A2AServer
+from strands.models.gemini import GeminiModel
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+
+gemini = GeminiModel(
+    client_args={"api_key": os.getenv("GEMINI_API_KEY")},
+    model_id="gemini-2.5-flash",
+)
 
 class RulesKnowledgeBase:
     """Fast knowledge base interface"""

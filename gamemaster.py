@@ -1,7 +1,8 @@
-from strands import Agent
+from strands import Agent, tool
 from strands.models.gemini import GeminiModel
 import os
 from dotenv import load_dotenv
+import random
 
 load_dotenv()
 
@@ -10,7 +11,36 @@ gemini = GeminiModel(
     model_id="gemini-2.5-flash",
 )
 
-agent = Agent(model=gemini)
+
+@tool
+def roll_dice(num_dice: str, num_faces: str) -> str:
+    """
+    Rolls a specified number of dice with a specified number of faces.
+
+    Args:
+        num_dice: The number of dice to roll as a string.
+        num_faces: The number of faces per die as a string.
+
+    Returns:
+        A string describing the results of the rolls or an error message.
+    """
+    try:
+        n = int(num_dice)
+        f = int(num_faces)
+
+        if n <= 0 or f <= 0:
+            return "Error: Number of dice and faces must be positive integers."
+
+        rolls = [random.randint(1, f) for _ in range(n)]
+        print(
+            f"Rolled {n} dice with {f} faces: {', '.join(map(str, rolls))} (Total: {sum(rolls)})"
+        )
+        return f"Rolled {n} dice with {f} faces: {', '.join(map(str, rolls))} (Total: {sum(rolls)})"
+    except ValueError:
+        return "Error: Invalid input. Both number of dice and faces must be integers."
+
+
+agent = Agent(model=gemini, tools=[roll_dice])
 
 print("Agentic Adventure - Type 'quit' to exit")
 while True:

@@ -10,8 +10,9 @@ load_dotenv()
 
 gemini = GeminiModel(
     client_args={"api_key": os.getenv("GEMINI_API_KEY")},
-    model_id="gemini-2.5-flash",
+    model_id="gemini-3.1-flash-lite-preview",
 )
+
 
 class RulesKnowledgeBase:
     """Fast knowledge base interface"""
@@ -84,10 +85,9 @@ then provide a clear, concise answer with the page reference. Keep responses bri
 """
 
 agent = Agent(
-    # TODO: Configure the agent with:
-    # - model: Optional
-    # - tools: List containing the query_dnd_rules tool
-    # - name: "Rules Agent"
+    model=gemini,
+    tools=[query_dnd_rules],
+    name="D&D Rules Agent",
     description=DESCRIPTION,
     system_prompt=SYSTEM_PROMPT,
 )
@@ -95,8 +95,7 @@ agent = Agent(
 # TODO: Create an A2AServer instance with:
 # - agent: The agent instance created above
 # - port: 8000 (Rules Agent port)
-a2a_server = None
+a2a_server = A2AServer(agent, host="0.0.0.0", port=8083)
 
 if __name__ == "__main__":
-    # TODO: Start the A2A server
-    pass
+    a2a_server.serve()

@@ -11,17 +11,24 @@ load_dotenv()
 
 gemini = GeminiModel(
     client_args={"api_key": os.getenv("GEMINI_API_KEY")},
-    model_id="gemini-2.5-flash",
+    model_id="gemini-3.1-flash-lite-preview",
+    params={"temperature": "0.5"},
 )
 
 dice_mcp = MCPClient(lambda: streamable_http_client("http://0.0.0.0:8081/mcp"))
 
-a2a_provider = A2AClientToolProvider(known_agent_urls=["http://0.0.0.0:8082"])
+a2a_provider = A2AClientToolProvider(
+    known_agent_urls=[
+        "http://0.0.0.0:8082",
+        "http://0.0.0.0:8083",
+    ]
+)
 
 SYSTEM_PROMPT = """You are a D&D Game Master orchestrator with access to specialized agents and tools.
 
 Available agents:
 - Character Agent (http://0.0.0.0:8082) - For character creation and management
+- Rules Agent (http://0.0.0.0:8083) - For rule referencing and validating game mechanics
 
 To communicate with agents:
 1. Use a2a_list_discovered_agents to see available agents
@@ -40,6 +47,8 @@ Available D&D dice types:
 IMPORTANT: Always use the exact URLs shown by a2a_list_discovered_agents. Never invent or guess URLs.
 
 Be creative, engaging, and use your available tools to enhance the D&D experience.
+You must roll dice when asked to provide the results to the user or to other agents.
+Always consult the rules agent when executing mechanics or dice rolls in the game.
 
 """
 
